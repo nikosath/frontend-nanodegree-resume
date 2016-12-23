@@ -9,11 +9,56 @@ var bio = {
   "name": "Nikos Athanasakis",
   "role": "Web Developer",
   "contacts": {
-    "email": "emidekol@gmail.com"
+    "mobile": "(+30)6957621670",
+    "email": "emidekol@gmail.com",
+    "github": "nikosath",
+    "location": "Marousi, Greece"
   },
-  "bioPic": "images/me.png",
-  "welcomeMsg": "Welcome!",
-  "skills": ["Html", "Css", "JavaScript"]
+  "welcomeMessage": "Welcome!",
+  "skills": ["Html", "Css", "JavaScript"],
+  "biopic": "images/me.png"
+}
+
+bio.display = function() {
+  var formattedName = HTMLheaderName.replace("%data%", bio.name)
+  var formattedRole = HTMLheaderRole.replace("%data%", bio.role)
+  var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email)
+  var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile)
+  var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github)
+  var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location)
+  var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic)
+  var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage)
+
+  $("#topContacts").append(formattedEmail + formattedMobile + formattedGithub + formattedLocation)
+
+  $("#header").prepend(formattedName + formattedRole)
+  $("#header").append(formattedBioPic + formattedWelcomeMsg)
+
+  if (bio.skills.length > 0) {
+    // console.log(bio.skills)
+    $("#header").append(HTMLskillsStart)
+    for (var skillNumber = 0; skillNumber < bio.skills.length; skillNumber++) {
+      formattedSkill = formattedSkills.concat(HTMLskills.replace("%data%", bio.skills[skillNumber]))
+      $("#skills").append(formattedSkill)
+    }
+  }
+
+}
+var education = {}
+education["lastSchool"] =
+education["graduationYear"] = "2014"
+education["city"] = "Athens, Greece"
+
+var education = {
+  "schools": [
+    {
+      "name": "Technological Educational Institute of Athens",
+      "location": "Aigaleo, Greece",
+      "degree dates": "2014",
+      "url": "http://www.teiath.gr/?lang=en",
+      "majors": ["Software Engineering"]
+    }
+  ]
 }
 var work = {
   "jobs": [
@@ -43,8 +88,8 @@ var projects = {
       "dates": "dates",
       "description": "description",
       "images": [
-        "images/me.png",
-        "images/me.png"
+        "images/fry.jpg",
+        "images/fry.jpg"
       ]
     }
 
@@ -60,25 +105,18 @@ projects.display = function() {
     var formattedHTMLprojectImages = (function(){
       var imgUrls = ""
       project.images.forEach(function(imgUrl) {
-        imgUrls.append(HTMLprojectImage.replace("%data%"), imgUrl)
+        imgUrls =  imgUrls.concat(HTMLprojectImage.replace("%data%", imgUrl))
       })
       return imgUrls
-    }())
+    }());
 
-    $("#projects").append(HTMLprojectStart + formattedHTMLprojectTitle + formattedHTMLprojectDates + formattedHTMLprojectImages)
+    $("#projects").append(HTMLprojectStart)
+    $(".project-entry:last").append(formattedHTMLprojectTitle + formattedHTMLprojectDates + formattedHTMLprojectDescription + formattedHTMLprojectImages)
   })
 }
 
+bio.display()
 projects.display()
-
-if (bio.skills.length > 0) {
-  console.log(bio.skills)
-  $("#header").append(HTMLskillsStart)
-  for (var skillNumber = 0; skillNumber < bio.skills.length; skillNumber++) {
-    var formattedSkill = HTMLskills.replace("%data%", bio.skills[skillNumber])
-    $("#skills").append(formattedSkill)
-  }
-}
 
 displayWork(work)
 // var displayWork = function(work) {
@@ -102,40 +140,6 @@ function inName(name) {
   var parts = name.split(" ")
   return (capitalize(parts[0]) + " " + parts[1].toUpperCase())
 }
-console.log(inName(bio.name))
-console.log(bio.name)
 
+$("#mapDiv").append(googleMap)
 $("#main").append(internationalizeButton)
-
-work.currentJob = "student"
-work.employer = "myself"
-work.years = "all my life"
-work.city = "Athens, Greece"
-
-var education = {}
-education["lastSchool"] = "Technological Educational Institute of Athens"
-education["graduationYear"] = "2014"
-education["city"] = "Athens, Greece"
-
-var formattedName = HTMLheaderName.replace("%data%", bio.name)
-var formattedRole = HTMLheaderRole.replace("%data%", bio.role)
-var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email)
-var formattedBioPic = HTMLbioPic.replace("%data%", bio.bioPic)
-var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMsg)
-
-// Using bracket and dot notation (as per Udacity's instructions)
-var formattedCurrentJob = HTMLworkTitle.replace("%data%", work["currentJob"])
-var formattedLastSchool = HTMLschoolName.replace("%data%", education.lastSchool)
-
-formattedCurrentJob = work["currentJob"]
-formattedLastSchool = education.lastSchool
-
-$("#header").prepend(formattedBioPic)
-$("#header").prepend(formattedWelcomeMsg)
-$("#header").prepend(formattedEmail)
-$("#header").prepend(formattedRole)
-$("#header").prepend(formattedName)
-// $("#workExperience").append(formattedCurrentJob)
-//
-// $("#education").append(HTMLschoolStart)
-// $(".education-entry").append(formattedLastSchool)

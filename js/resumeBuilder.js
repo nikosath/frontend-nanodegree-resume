@@ -1,9 +1,7 @@
+// Note that I made a stylistic choice to not use semicolons
+
 // Beware of script concatenation
 "use strict"
-
-$(document).click(function(event) {
-  logClicks(event.pageX, event.pageY)
-})
 
 var bio = {
   "name": "Nikos Athanasakis",
@@ -19,7 +17,7 @@ var bio = {
   "biopic": "images/me.png"
 }
 
-bio.display = function() {
+bio.display = function () {
   var formattedName = HTMLheaderName.replace("%data%", bio.name)
   var formattedRole = HTMLheaderRole.replace("%data%", bio.role)
   var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email)
@@ -38,53 +36,111 @@ bio.display = function() {
     // console.log(bio.skills)
     $("#header").append(HTMLskillsStart)
     for (var skillNumber = 0; skillNumber < bio.skills.length; skillNumber++) {
-      formattedSkill = formattedSkills.concat(HTMLskills.replace("%data%", bio.skills[skillNumber]))
+      var formattedSkill = HTMLskills.replace("%data%", bio.skills[skillNumber])
       $("#skills").append(formattedSkill)
     }
   }
 
 }
-var education = {}
-education["lastSchool"] =
-education["graduationYear"] = "2014"
-education["city"] = "Athens, Greece"
 
 var education = {
-  "schools": [
-    {
-      "name": "Technological Educational Institute of Athens",
-      "location": "Aigaleo, Greece",
-      "degree dates": "2014",
-      "url": "http://www.teiath.gr/?lang=en",
-      "majors": ["Software Engineering"]
-    }
-  ]
+  "schools": [{
+    "name": "Technological Educational Institute of Athens",
+    "location": "Aigaleo, Greece",
+    "degree": "Bachelor's degree",
+    "majors": ["Software Engineering"],
+    "dates": "2014",
+    "url": "http://www.teiath.gr/?lang=en",
+  }],
+  "onlineCourses": [{
+    "title": "Frontent Nanodegree",
+    "school": "Udacity",
+    "dates": "2016",
+    "url": "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
+  }]
 }
+
+education.display = function () {
+  // Preparing school entries
+  this.schools.forEach(function (school) {
+    var formattedHTMLschoolName = HTMLschoolName.replace("%data%", school.name)
+    var formattedHTMLschoolLocation = HTMLschoolLocation.replace("%data%", school.location)
+    var formattedHTMLschoolDegree = HTMLschoolDegree.replace("%data%", school.degree)
+    var formattedHTMLschoolDates = HTMLschoolDates.replace("%data%", school.dates)
+
+    var formattedHTMLschoolMajors = (function () {
+      var majors = ""
+      school.majors.forEach(function (major) {
+        majors = majors.concat(HTMLschoolMajor.replace("%data%", major))
+      })
+      return majors
+    }());
+
+    // Preparing online courses entries
+    HTMLonlineClasses = '<h3>Online Classes</h3>';
+    var HTMLonlineTitle = '<a href="#">%data%';
+    var HTMLonlineSchool = ' - %data%</a>';
+    var HTMLonlineDates = '<div class="date-text">%data%</div>';
+    var HTMLonlineURL
+
+    var formattedHTMLschoolName = HTMLschoolName.replace("%data%", school.name)
+    var formattedHTMLschoolLocation = HTMLschoolLocation.replace("%data%", school.location)
+    var formattedHTMLschoolDegree = HTMLschoolDegree.replace("%data%", school.degree)
+    var formattedHTMLschoolDates = HTMLschoolDates.replace("%data%", school.dates)
+
+    $("#education").append(HTMLschoolStart)
+    $(".education-entry:last").append(formattedHTMLschoolName + formattedHTMLschoolLocation + formattedHTMLschoolDegree + formattedHTMLschoolDates + formattedHTMLschoolMajors)
+  })
+
+  $("#education").append(HTMLonlineClasses)
+    // Preparing online courses entries
+  this.onlineCourses.forEach(function (course) {
+
+    var formattedHTMLonlineTitle = HTMLonlineTitle.replace("%data%", course.title)
+    var formattedHTMLonlineSchool = HTMLonlineSchool.replace("%data%", course.school)
+    var formattedHTMLonlineDates = HTMLonlineDates.replace("%data%", course.dates)
+    var formattedHTMLonlineURL = HTMLonlineURL.replace("%data%", course.url)
+
+    $("#education").append(HTMLschoolStart)
+    $(".education-entry:last").append(formattedHTMLonlineTitle + formattedHTMLonlineSchool + formattedHTMLonlineDates + formattedHTMLonlineURL)
+  })
+
+}
+
 var work = {
-  "jobs": [
-    {
-      "employer": "INOI Hotel",
-      "title": "Reception Manager",
-      "location": "Athens, Greece",
-      "dates": "2010 – 2016",
-      "description": "More like, the underpaid hotel manager."
+  "jobs": [{
+    "employer": "INOI Hotel",
+    "title": "Reception Manager",
+    "location": "Athens, Greece",
+    "dates": "2010 – 2016",
+    "description": "More like, the underpaid hotel manager."
+  }]
+}
+
+work.display = function () {
+  if (this.jobs.length > 0) {
+    for (var jobIdx = 0; jobIdx < this.jobs.length; jobIdx++) {
+      $("#workExperience").append(HTMLworkStart)
+      var formattedEmployer = HTMLworkEmployer.replace("%data%", this.jobs[jobIdx].employer)
+      var formattedWorkTitle = HTMLworkTitle.replace("%data%", this.jobs[jobIdx].title)
+      var formattedWorkDates = HTMLworkDates.replace("%data%", this.jobs[jobIdx].dates)
+      var formattedWorkDescription = HTMLworkDescription.replace("%data%", this.jobs[jobIdx].description)
+      $(".work-entry:last").append(formattedEmployer + " " + formattedWorkTitle + formattedWorkDates + formattedWorkDescription)
     }
-  ]
+  }
 }
 
 var projects = {
-  "projects": [
-    {
-      "title": "project1",
-      "dates": "dates",
-      "description": "description",
+  "projects": [{
+      "title": "Resume Page",
+      "dates": "2016",
+      "description": "It's a resume page",
       "images": [
         "images/fry.jpg",
         "images/fry.jpg"
       ]
-    },
-    {
-      "title": "project2",
+    }, {
+      "title": "Future Project",
       "dates": "dates",
       "description": "description",
       "images": [
@@ -96,16 +152,16 @@ var projects = {
   ]
 }
 
-projects.display = function() {
+projects.display = function () {
   // console.log(this.projects)
-  this.projects.forEach(function(project) {
+  this.projects.forEach(function (project) {
     var formattedHTMLprojectTitle = HTMLprojectTitle.replace("%data%", project.title)
     var formattedHTMLprojectDates = HTMLprojectDates.replace("%data%", project.dates)
     var formattedHTMLprojectDescription = HTMLprojectDescription.replace("%data%", project.description)
-    var formattedHTMLprojectImages = (function(){
+    var formattedHTMLprojectImages = (function () {
       var imgUrls = ""
-      project.images.forEach(function(imgUrl) {
-        imgUrls =  imgUrls.concat(HTMLprojectImage.replace("%data%", imgUrl))
+      project.images.forEach(function (imgUrl) {
+        imgUrls = imgUrls.concat(HTMLprojectImage.replace("%data%", imgUrl))
       })
       return imgUrls
     }());
@@ -116,26 +172,15 @@ projects.display = function() {
 }
 
 bio.display()
+work.display()
 projects.display()
+education.display()
 
-displayWork(work)
-// var displayWork = function(work) {
-function displayWork(work) {
-  if (work.jobs.length > 0) {
-    for (var jobIdx = 0; jobIdx < work.jobs.length; jobIdx++) {
-      $("#workExperience").append(HTMLworkStart)
-      var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[jobIdx].employer)
-      var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[jobIdx].title)
-      var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[jobIdx].dates)
-      var formattedWorkDescription = HTMLworkDescription.replace("%data%", work.jobs[jobIdx].description)
-      $(".work-entry:last").append(formattedEmployer + " " + formattedWorkTitle + formattedWorkDates + formattedWorkDescription)
-    }
-  }
-}
 function capitalize(name) {
   return name[0].toUpperCase() + name.slice(1).toLowerCase();
 
 }
+
 function inName(name) {
   var parts = name.split(" ")
   return (capitalize(parts[0]) + " " + parts[1].toUpperCase())
@@ -143,3 +188,6 @@ function inName(name) {
 
 $("#mapDiv").append(googleMap)
 $("#main").append(internationalizeButton)
+
+// Replicating contacts, from header to footer
+$("#footerContacts").html($("#topContacts").html())

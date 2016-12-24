@@ -145,7 +145,6 @@ function initializeMap() {
       locations.push(job.location);
     });
 
-console.log(locations)
     return locations;
   }
 

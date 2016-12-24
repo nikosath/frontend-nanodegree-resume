@@ -1,7 +1,5 @@
-// Note that I made a stylistic choice to not use semicolons
-
 // Beware of script concatenation
-"use strict"
+// "use strict";
 
 var bio = {
   "name": "Nikos Athanasakis",
@@ -15,33 +13,33 @@ var bio = {
   "welcomeMessage": "Welcome!",
   "skills": ["Html", "Css", "JavaScript"],
   "biopic": "images/me.png"
-}
+};
 
 bio.display = function () {
-  var formattedName = HTMLheaderName.replace("%data%", bio.name)
-  var formattedRole = HTMLheaderRole.replace("%data%", bio.role)
-  var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email)
-  var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile)
-  var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github)
-  var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location)
-  var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic)
-  var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage)
+  var formattedName = HTMLheaderName.replace("%data%", bio.name);
+  var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+  var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
+  var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
+  var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
+  var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
+  var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic);
+  var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
-  $("#topContacts").append(formattedEmail + formattedMobile + formattedGithub + formattedLocation)
+  $("#topContacts").append(formattedEmail + formattedMobile + formattedGithub + formattedLocation);
 
-  $("#header").prepend(formattedName + formattedRole)
-  $("#header").append(formattedBioPic + formattedWelcomeMsg)
+  $("#header").prepend(formattedName + formattedRole);
+  $("#header").append(formattedBioPic + formattedWelcomeMsg);
 
   if (bio.skills.length > 0) {
-    // console.log(bio.skills)
-    $("#header").append(HTMLskillsStart)
+    // console.log(bio.skills);
+    $("#header").append(HTMLskillsStart);
     for (var skillNumber = 0; skillNumber < bio.skills.length; skillNumber++) {
-      var formattedSkill = HTMLskills.replace("%data%", bio.skills[skillNumber])
-      $("#skills").append(formattedSkill)
+      var formattedSkill = HTMLskills.replace("%data%", bio.skills[skillNumber]);
+      $("#skills").append(formattedSkill);
     }
   }
 
-}
+};
 
 var education = {
   "schools": [{
@@ -58,54 +56,42 @@ var education = {
     "dates": "2016",
     "url": "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
   }]
-}
+};
 
 education.display = function () {
   // Preparing school entries
   this.schools.forEach(function (school) {
-    var formattedHTMLschoolName = HTMLschoolName.replace("%data%", school.name)
-    var formattedHTMLschoolLocation = HTMLschoolLocation.replace("%data%", school.location)
-    var formattedHTMLschoolDegree = HTMLschoolDegree.replace("%data%", school.degree)
-    var formattedHTMLschoolDates = HTMLschoolDates.replace("%data%", school.dates)
+    var formattedHTMLschoolName = HTMLschoolName.replace("%data%", school.name);
+    var formattedHTMLschoolLocation = HTMLschoolLocation.replace("%data%", school.location);
+    var formattedHTMLschoolDegree = HTMLschoolDegree.replace("%data%", school.degree);
+    var formattedHTMLschoolDates = HTMLschoolDates.replace("%data%", school.dates);
 
     var formattedHTMLschoolMajors = (function () {
-      var majors = ""
+      var majors = "";
       school.majors.forEach(function (major) {
-        majors = majors.concat(HTMLschoolMajor.replace("%data%", major))
-      })
-      return majors
+        majors = majors.concat(HTMLschoolMajor.replace("%data%", major));
+      });
+      return majors;
     }());
 
-    // Preparing online courses entries
-    HTMLonlineClasses = '<h3>Online Classes</h3>';
-    var HTMLonlineTitle = '<a href="#">%data%';
-    var HTMLonlineSchool = ' - %data%</a>';
-    var HTMLonlineDates = '<div class="date-text">%data%</div>';
-    var HTMLonlineURL
+    $("#education").append(HTMLschoolStart);
+    $(".education-entry:last").append(formattedHTMLschoolName + formattedHTMLschoolLocation + formattedHTMLschoolDegree + formattedHTMLschoolDates + formattedHTMLschoolMajors);
+  });
 
-    var formattedHTMLschoolName = HTMLschoolName.replace("%data%", school.name)
-    var formattedHTMLschoolLocation = HTMLschoolLocation.replace("%data%", school.location)
-    var formattedHTMLschoolDegree = HTMLschoolDegree.replace("%data%", school.degree)
-    var formattedHTMLschoolDates = HTMLschoolDates.replace("%data%", school.dates)
-
-    $("#education").append(HTMLschoolStart)
-    $(".education-entry:last").append(formattedHTMLschoolName + formattedHTMLschoolLocation + formattedHTMLschoolDegree + formattedHTMLschoolDates + formattedHTMLschoolMajors)
-  })
-
-  $("#education").append(HTMLonlineClasses)
-    // Preparing online courses entries
+  // Preparing online courses entries
+  $("#education").append(HTMLonlineClasses);
   this.onlineCourses.forEach(function (course) {
 
-    var formattedHTMLonlineTitle = HTMLonlineTitle.replace("%data%", course.title)
-    var formattedHTMLonlineSchool = HTMLonlineSchool.replace("%data%", course.school)
-    var formattedHTMLonlineDates = HTMLonlineDates.replace("%data%", course.dates)
-    var formattedHTMLonlineURL = HTMLonlineURL.replace("%data%", course.url)
+    var formattedHTMLonlineTitle = HTMLonlineTitle.replace("%data%", course.title);
+    var formattedHTMLonlineSchool = HTMLonlineSchool.replace("%data%", course.school);
+    var formattedHTMLonlineDates = HTMLonlineDates.replace("%data%", course.dates);
+    var formattedHTMLonlineURL = HTMLonlineURL.replace("%data%", course.url);
 
-    $("#education").append(HTMLschoolStart)
-    $(".education-entry:last").append(formattedHTMLonlineTitle + formattedHTMLonlineSchool + formattedHTMLonlineDates + formattedHTMLonlineURL)
-  })
+    $("#education").append(HTMLschoolStart);
+    $(".education-entry:last").append(formattedHTMLonlineTitle + formattedHTMLonlineSchool + formattedHTMLonlineDates + formattedHTMLonlineURL);
+  });
 
-}
+};
 
 var work = {
   "jobs": [{
@@ -115,20 +101,20 @@ var work = {
     "dates": "2010 – 2016",
     "description": "More like, the underpaid hotel manager."
   }]
-}
+};
 
 work.display = function () {
   if (this.jobs.length > 0) {
     for (var jobIdx = 0; jobIdx < this.jobs.length; jobIdx++) {
-      $("#workExperience").append(HTMLworkStart)
-      var formattedEmployer = HTMLworkEmployer.replace("%data%", this.jobs[jobIdx].employer)
-      var formattedWorkTitle = HTMLworkTitle.replace("%data%", this.jobs[jobIdx].title)
-      var formattedWorkDates = HTMLworkDates.replace("%data%", this.jobs[jobIdx].dates)
-      var formattedWorkDescription = HTMLworkDescription.replace("%data%", this.jobs[jobIdx].description)
-      $(".work-entry:last").append(formattedEmployer + " " + formattedWorkTitle + formattedWorkDates + formattedWorkDescription)
+      $("#workExperience").append(HTMLworkStart);
+      var formattedEmployer = HTMLworkEmployer.replace("%data%", this.jobs[jobIdx].employer);
+      var formattedWorkTitle = HTMLworkTitle.replace("%data%", this.jobs[jobIdx].title);
+      var formattedWorkDates = HTMLworkDates.replace("%data%", this.jobs[jobIdx].dates);
+      var formattedWorkDescription = HTMLworkDescription.replace("%data%", this.jobs[jobIdx].description);
+      $(".work-entry:last").append(formattedEmployer + " " + formattedWorkTitle + formattedWorkDates + formattedWorkDescription);
     }
   }
-}
+};
 
 var projects = {
   "projects": [{
@@ -150,44 +136,44 @@ var projects = {
     }
 
   ]
-}
+};
 
 projects.display = function () {
   // console.log(this.projects)
   this.projects.forEach(function (project) {
-    var formattedHTMLprojectTitle = HTMLprojectTitle.replace("%data%", project.title)
-    var formattedHTMLprojectDates = HTMLprojectDates.replace("%data%", project.dates)
-    var formattedHTMLprojectDescription = HTMLprojectDescription.replace("%data%", project.description)
+    var formattedHTMLprojectTitle = HTMLprojectTitle.replace("%data%", project.title);
+    var formattedHTMLprojectDates = HTMLprojectDates.replace("%data%", project.dates);
+    var formattedHTMLprojectDescription = HTMLprojectDescription.replace("%data%", project.description);
     var formattedHTMLprojectImages = (function () {
-      var imgUrls = ""
+      var imgUrls = "";
       project.images.forEach(function (imgUrl) {
-        imgUrls = imgUrls.concat(HTMLprojectImage.replace("%data%", imgUrl))
-      })
-      return imgUrls
+        imgUrls = imgUrls.concat(HTMLprojectImage.replace("%data%", imgUrl));
+      });
+      return imgUrls;
     }());
 
-    $("#projects").append(HTMLprojectStart)
-    $(".project-entry:last").append(formattedHTMLprojectTitle + formattedHTMLprojectDates + formattedHTMLprojectDescription + formattedHTMLprojectImages)
-  })
-}
+    $("#projects").append(HTMLprojectStart);
+    $(".project-entry:last").append(formattedHTMLprojectTitle + formattedHTMLprojectDates + formattedHTMLprojectDescription + formattedHTMLprojectImages);
+  });
+};
 
-bio.display()
-work.display()
-projects.display()
-education.display()
+bio.display();
+work.display();
+projects.display();
+education.display();
 
-function capitalize(name) {
-  return name[0].toUpperCase() + name.slice(1).toLowerCase();
+// function capitalize(name) {
+//   return name[0].toUpperCase() + name.slice(1).toLowerCase();
+// 
+// }
+//
+// function inName(name) {
+//   var parts = name.split(" ");
+//   return (capitalize(parts[0]) + " " + parts[1].toUpperCase());
+// }
 
-}
-
-function inName(name) {
-  var parts = name.split(" ")
-  return (capitalize(parts[0]) + " " + parts[1].toUpperCase())
-}
-
-$("#mapDiv").append(googleMap)
-$("#main").append(internationalizeButton)
+$("#mapDiv").append(googleMap);
+$("#main").append(internationalizeButton);
 
 // Replicating contacts, from header to footer
-$("#footerContacts").html($("#topContacts").html())
+$("#footerContacts").html($("#topContacts").html());
